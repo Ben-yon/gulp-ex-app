@@ -1,5 +1,6 @@
 const gulp = require('gulp');
-
+const imagemin = require('gulp-imagemin');
+const uglify = require('gulp-uglify');
 /** 
  *  -- TOP LEVEL FUNCTIONS
  *  gulp.task - Define tasks
@@ -10,6 +11,28 @@ const gulp = require('gulp');
 */
 
 // logs message
-gulp.task('default', function(){
+gulp.task('message', function(){
     return console.log('Gulp is running...');
 });
+
+//copy all html files from the src dir and creates dist dir and paste them there.
+gulp.task('copyHtml', ()=>{
+    gulp.src('src/*.html')
+    .pipe(gulp.dest('dist'));
+});
+
+// optimize images
+gulp.task('imageOpt', (done) => {
+    gulp.src('src/images/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dist/images'));
+    done();
+});
+
+//Minify JS
+gulp.task('minify', (done)=>{
+    gulp.src('src/js/*.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js'));
+        done();
+})
