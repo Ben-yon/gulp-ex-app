@@ -4,6 +4,9 @@ const uglify = require('gulp-uglify');
 const gulpSass = require('gulp-sass');
 const nodeSass = require('node-sass'); 
 const sass = gulpSass(nodeSass);
+const concat = require('gulp-concat');
+const { src } = require('gulp');
+
 /** 
  *  -- TOP LEVEL FUNCTIONS
  *  gulp.task - Define tasks
@@ -14,14 +17,16 @@ const sass = gulpSass(nodeSass);
 */
 
 // logs message
-gulp.task('message', function(){
-    return console.log('Gulp is running...');
+gulp.task('message', function(done){
+    console.log('Gulp is running...');
+    done();
 });
 
 //copy all html files from the src dir and creates dist dir and paste them there.
-gulp.task('copyHtml', ()=>{
+gulp.task('copyHtml', (done)=>{
     gulp.src('src/*.html')
     .pipe(gulp.dest('dist'));
+    done();
 });
 
 // optimize images
@@ -45,4 +50,27 @@ gulp.task('compile-sass', (done)=>{
     gulp.src('src/sass/*.scss')
         .pipe(sass().on('error',sass.logError))
         .pipe(gulp.dest('dist/sass'));
+        done();
+});
+
+// concatenate the content of scripts
+gulp.task('scripts', (done)=>{
+    gulp.src('src/js/*.js')
+        .pipe(concat('main.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js'));
+    done();
+})
+
+gulp.task('default', gulp.parallel('message', 'copyHtml', 'imageOpt', 'compile-sass', 'scripts', (done)=>{
+    done();
+}));
+
+
+gulp.task('watch', (done)=> {
+    gulp.watch('src/js/*.js', gulp.series('scripts'));
+    gulp.watch('src/images/*', gulp.series('imageOpt'));
+    gulp.watch('src/sass/*.scss', gulp.series('compile-sass'));
+    gulp.watch('src/*.html', gulp.series('copyHtml'));
+    done();
 })
