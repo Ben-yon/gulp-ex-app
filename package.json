@@ -1,0 +1,30 @@
+{
+  "name": "gulp-ex-app",
+  "version": "1.0.0",
+  "description": "getting familiar with gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ben-yon/gulp-ex-app.git"
+  },
+  "keywords": [
+    "Gulp"
+  ],
+  "author": "Benjamin Ikeh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ben-yon/gulp-ex-app/issues"
+  },
+  "homepage": "https://github.com/Ben-yon/gulp-ex-app#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^6.0.1"
+  }
+}
